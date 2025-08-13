@@ -459,3 +459,108 @@
     transform: translateY(-4px);
     transition: all 0.3s ease;
 }
+/* ========= Card ========= */
+.form-card {
+  background: rgba(35,35,42,0.8);
+  padding: 30px;
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+/* ========= Inputs ========= */
+.form-input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+  font-size: 1rem;
+  margin-bottom: 15px;
+  transition: box-shadow .3s ease;
+}
+.form-input:focus {
+  box-shadow: 0 0 10px rgba(99,102,241,0.6);
+}
+
+/* ========= Labels ========= */
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #a5b4fc;
+}
+
+/* ========= Choice Groups ========= */
+.checkbox-group,
+.radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Hide the real controls but keep them accessible */
+.checkbox-group input[type="checkbox"],
+.radio-group input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* The visible "frame button" */
+.checkbox-group label,
+.radio-group label {
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #e5e7eb;
+  cursor: pointer;
+  user-select: none;
+  transition: background .2s ease, box-shadow .2s ease, border-color .2s ease, transform .05s ease;
+}
+
+.checkbox-group label:hover,
+.radio-group label:hover {
+  background: rgba(99,102,241,0.18);
+}
+
+.checkbox-group label:active,
+.radio-group label:active {
+  transform: scale(0.98);
+}
+
+/* ========= PERSISTENT SELECTED STATE ========= */
+/* Pattern A: input BEFORE label */
+.checkbox-group input[type="checkbox"]:checked + label,
+.radio-group   input[type="radio"]:checked + label {
+  background: rgba(99,102,241,0.45);
+  border-color: rgba(99,102,241,0.8);
+  box-shadow: 0 0 10px rgba(99,102,241,0.6);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Pattern B: input INSIDE label (works via :has) */
+.checkbox-group label:has(input[type="checkbox"]:checked),
+.radio-group   label:has(input[type="radio"]:checked) {
+  background: rgba(99,102,241,0.45);
+  border-color: rgba(99,102,241,0.8);
+  box-shadow: 0 0 10px rgba(99,102,241,0.6);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Keyboard focus ring (for both patterns) */
+.checkbox-group input[type="checkbox"]:focus-visible + label,
+.radio-group   input[type="radio"]:focus-visible + label,
+.checkbox-group label:has(input[type="checkbox"]:focus-visible),
+.radio-group   label:has(input[type="radio"]:focus-visible) {
+  outline: 2px solid rgba(99,102,241,0.9);
+  outline-offset: 2px;
+}

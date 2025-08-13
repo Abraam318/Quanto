@@ -352,22 +352,62 @@
                     <h2>Book a Free Call</h2>
                     <p>
                         Let’s discuss your business needs and create a personalized plan. 
-                        Fill out the form and I’ll get back to you quickly.
+                        Fill out the form and I’ll get back to you ASAP.
                     </p>
                 </div>
             </div>
-<div class="col-lg-6 col-md-12">
+
+
+
+            <div class="col-lg-6 col-md-12">
     <div class="newsletter-area-form">
-        <form id="contactForm">
+        <form id="contactForm" class="form-card">
+            <!-- Name -->
             <div class="form-group">
-                <input type="text" name="name" placeholder="Your Name" required />
+                <input type="text" name="name" placeholder="Your Name" required class="form-input" />
             </div>
+
+            <!-- Email -->
             <div class="form-group">
-                <input type="email" name="email" placeholder="Your Email" required />
+                <input type="email" name="email" placeholder="Your Email" required class="form-input" />
             </div>
+
+            <!-- Business Info -->
             <div class="form-group">
-                <textarea name="message" placeholder="Tell me about your business..." required></textarea>
+                <textarea name="message" placeholder="Tell me about your business..." required class="form-input"></textarea>
             </div>
+
+<!-- Available Days -->
+<div class="form-group">
+    <label class="form-label" for="available-days">Available Days:</label>
+    <div class="checkbox-group" id="available-days">
+        <label><input type="checkbox" name="days[]" value="Sunday"> Sunday</label>
+        <label><input type="checkbox" name="days[]" value="Monday"> Monday</label>
+        <label><input type="checkbox" name="days[]" value="Tuesday"> Tuesday</label>
+        <label><input type="checkbox" name="days[]" value="Wednesday"> Wednesday</label>
+        <label><input type="checkbox" name="days[]" value="Thursday"> Thursday</label>
+        <label><input type="checkbox" name="days[]" value="Friday"> Friday</label>
+        <label><input type="checkbox" name="days[]" value="Saturday"> Saturday</label>
+    </div>
+</div>
+
+<!-- Preferred Time Range -->
+<div class="form-group">
+    <span class="form-label">Preferred Time Range:</span>
+    <div class="checkbox-group">
+        <label><input type="checkbox" name="timeRange[]" value="Morning" required> Morning</label>
+        <label><input type="checkbox" name="timeRange[]" value="Evening"> Evening</label>
+        <label><input type="checkbox" name="timeRange[]" value="Night"> Night</label>
+    </div>
+</div>
+
+<p style="text-align: center; font-style: italic;">
+    Don’t worry, I’ve already considered your timezone.🙂</p>
+
+            <!-- Hidden Time Zone -->
+            <input type="hidden" name="timeZone" id="timeZone">
+
+            <!-- Submit -->
             <button type="submit" class="primary__button">
                 Book Free Call <i class="fas fa-arrow-right"></i>
             </button>
@@ -377,6 +417,42 @@
 </div>
 
 <script>
+        // Detect and set user's timezone
+    document.getElementById("timeZone").value = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    // Handle form submission
+    document.getElementById("contactForm").addEventListener("submit", async function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+
+        // Convert days[] from checkboxes to array
+        data.days = formData.getAll("days[]");
+        data.timeRange = formData.getAll("timeRange[]");
+        try {
+            const response = await fetch("/your-endpoint-here", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                document.getElementById("formResponse").innerText = "Your booking request has been sent!";
+                document.getElementById("formResponse").style.display = "block";
+                this.reset();
+            } else {
+                document.getElementById("formResponse").innerText = "Something went wrong. Please try again.";
+                document.getElementById("formResponse").style.color = "red";
+                document.getElementById("formResponse").style.display = "block";
+            }
+        } catch (error) {
+            document.getElementById("formResponse").innerText = "Error sending request.";
+            document.getElementById("formResponse").style.color = "red";
+            document.getElementById("formResponse").style.display = "block";
+        }
+    });
+
 document.getElementById('contactForm').addEventListener('submit', async function(e) {
     e.preventDefault(); // Stop the normal form submission
 
@@ -393,6 +469,7 @@ document.getElementById('contactForm').addEventListener('submit', async function
         const responseMessage = document.getElementById('formResponse');
         responseMessage.textContent = "✅ Thanks for joining! We will contact you soon.";
         responseMessage.style.display = 'block';
+        responseMessage.style.color = "green"; // ✅ Make the text green
     } catch (error) {
         alert("❌ Something went wrong. Please try again.");
     }
