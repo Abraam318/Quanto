@@ -471,8 +471,11 @@ document.getElementById('contactForm').addEventListener('submit', async function
         responseMessage.style.display = 'block';
         responseMessage.style.color = "green"; // ✅ Make the text green
     } catch (error) {
-        alert("❌ Something went wrong. Please try again.");
-    }
+        const responseMessage = document.getElementById('formResponse');
+        responseMessage.textContent = "An error occurred while submitting the form. Please try again later.";
+        responseMessage.style.display = 'block';
+        responseMessage.style.color = "red"; // ✅ Make the text green
+            }
 });
 </script>
 
