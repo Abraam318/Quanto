@@ -343,7 +343,7 @@
                                 <div class="form-group">
                                     <span class="form-label">Preferred Time Range:</span>
                                     <div class="checkbox-group">
-                                        <label><input type="checkbox" name="timeRange[]" value="Morning" required> Morning</label>
+                                        <label><input type="checkbox" name="timeRange[]" value="Morning"> Morning</label>
                                         <label><input type="checkbox" name="timeRange[]" value="Evening"> Evening</label>
                                         <label><input type="checkbox" name="timeRange[]" value="Night"> Night</label>
                                     </div>
@@ -362,6 +362,69 @@
             </div>
         </section>
     </main>
+
+    <script>
+        // Detect and set user's timezone
+    document.getElementById("timeZone").value = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    // Handle form submission
+    document.getElementById("contactForm").addEventListener("submit", async function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+
+        // Convert days[] from checkboxes to array
+        data.days = formData.getAll("days[]");
+        data.timeRange = formData.getAll("timeRange[]");
+        try {
+            const response = await fetch("/your-endpoint-here", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                document.getElementById("formResponse").innerText = "Your booking request has been sent!";
+                document.getElementById("formResponse").style.display = "block";
+                this.reset();
+            } else {
+                document.getElementById("formResponse").innerText = "Something went wrong. Please try again.";
+                document.getElementById("formResponse").style.color = "red";
+                document.getElementById("formResponse").style.display = "block";
+            }
+        } catch (error) {
+            document.getElementById("formResponse").innerText = "Error sending request.";
+            document.getElementById("formResponse").style.color = "red";
+            document.getElementById("formResponse").style.display = "block";
+        }
+    });
+
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
+    e.preventDefault(); // Stop the normal form submission
+
+    const form = e.target;
+    const formData = new FormData(form);
+
+    try {
+        await fetch("https://primary-production-0ee20.up.railway.app/webhook/4fd0c7e4-402e-4cb1-b8a0-a103590dc851", {
+            method: "POST",
+            body: formData
+        });
+
+        form.style.display = 'none';
+        const responseMessage = document.getElementById('formResponse');
+        responseMessage.textContent = "✅ Thanks for joining! We will contact you soon.";
+        responseMessage.style.display = 'block';
+        responseMessage.style.color = "green"; // ✅ Make the text green
+    } catch (error) {
+        const responseMessage = document.getElementById('formResponse');
+        responseMessage.textContent = "An error occurred while submitting the form. Please try again later.";
+        responseMessage.style.display = 'block';
+        responseMessage.style.color = "red"; // ✅ Make the text green
+            }
+});
+</script>
 
     <!-- FOOTER -->
     <footer class="footer-area animate-in fade-up" style="background-color: #1f1f27; color: #ccc; font-size: 0.85rem; padding: 15px 0;">
