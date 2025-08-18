@@ -561,14 +561,24 @@
   outline-offset: 2px;
 }
 .testimonial-item {
-    display: flex;
-    justify-content: center; /* Center the image horizontally */
-    align-items: center; /* Center the image vertically */
-    overflow: hidden; /* Ensure the image doesn't overflow */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center;     /* Center vertically */
+  overflow: hidden;        /* Prevent overflow */
+  width: 100%;
 }
 
 .testimonial-item img {
-    object-fit: cover; /* Ensures the images don't get distorted */
-    max-height: 500px; /* Set the max height to 30px */
-    width: auto; /* Maintain aspect ratio */
+  object-fit: cover;  /* Prevent distortion */
+  width: 100%;        /* Fill container width */
+  height: auto;       /* Keep aspect ratio */
+  max-height: 500px;  /* Limit max height */
+  border-radius: 8px; /* Optional: rounded corners */
+}
+
+/* Mobile-specific tweak */
+@media (max-width: 768px) {
+  .testimonial-item img {
+    max-height: 300px; /* Smaller height for mobile */
+  }
 }
