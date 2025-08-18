@@ -579,6 +579,6 @@
 /* Mobile-specific tweak */
 @media (max-width: 768px) {
   .testimonial-item img {
-    max-height: 300px; /* Smaller height for mobile */
-  }
+  width: 100%;        /* Fill container width */
+  height: auto;       /* Keep aspect ratio */}
 }
