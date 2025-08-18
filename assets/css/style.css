@@ -148,7 +148,7 @@
     }
 
     /* CARDS */
-    .special-services-item, .price-box, .testimonial-item, .callto-action, .footer-area {
+    .special-services-item, .price-box,  .callto-action, .footer-area {
         background: rgba(35,35,42,0.8);
         backdrop-filter: blur(8px);
         border-radius: 16px;
@@ -158,7 +158,7 @@
         transition: all 0.3s ease;
         animation: fadeIn 1s ease-in-out;
     }
-    .special-services-item:hover, .price-box:hover, .testimonial-item:hover, .footer-area:hover, .callto-action:hover {
+    .special-services-item:hover, .price-box:hover,  .footer-area:hover, .callto-action:hover {
         box-shadow: 0 12px 40px rgba(99,102,241,0.25);
         transform: translateY(-6px) scale(1.03);
     }
@@ -256,11 +256,7 @@
 }
 
 
-    /* TESTIMONIALS */
-    .testimonial-item img {
-        border-radius: 50%;
-        margin-right: 10px;
-    }
+
     .client-name h6 {
         font-size: 1.1rem;
         color: #fff;
@@ -563,4 +559,16 @@
 .radio-group   label:has(input[type="radio"]:focus-visible) {
   outline: 2px solid rgba(99,102,241,0.9);
   outline-offset: 2px;
+}
+.testimonial-item {
+    display: flex;
+    justify-content: center; /* Center the image horizontally */
+    align-items: center; /* Center the image vertically */
+    overflow: hidden; /* Ensure the image doesn't overflow */
+}
+
+.testimonial-item img {
+    object-fit: cover; /* Ensures the images don't get distorted */
+    max-height: 500px; /* Set the max height to 30px */
+    width: auto; /* Maintain aspect ratio */
 }
